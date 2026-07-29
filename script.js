@@ -80,6 +80,16 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Mobile-friendly trigger: typing on the page only works with a physical
+// keyboard. On a phone, opening the link with ?debug=1 added to the end
+// (e.g. https://yazerrr.github.io/forGF/?debug=1) opens the same prompt —
+// the phone's own keyboard appears for that since it's a native browser
+// prompt, not page-typing. Still session-only, still invisible to anyone
+// who opens the plain link.
+if (new URLSearchParams(window.location.search).get('debug')) {
+  promptForFakeTime();
+}
+
 function promptForFakeTime() {
   const existingOffset = Number(sessionStorage.getItem(DEBUG_STORAGE_KEY) || 0);
   const suggestion = existingOffset
