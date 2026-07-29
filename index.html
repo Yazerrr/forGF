@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="is-locked">
+
+  <!-- ============ SECTION 1: LANDING / COUNTDOWN ============ -->
+  <section id="section-landing" class="landing">
+    <div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+
+    <div class="landing-card polaroid-frame">
+
+      <!-- Locked view: countdown -->
+      <div class="landing-view" id="lockedView">
+        <p class="eyebrow">psst...</p>
+        <h1 class="headline">Not Yet...</h1>
+        <p class="sub-text">Come back to this date and time:</p>
+
+        <div class="countdown" id="countdown">
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-days">00</span>
+            <small class="countdown-label">days</small>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-hours">00</span>
+            <small class="countdown-label">hours</small>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-minutes">00</span>
+            <small class="countdown-label">min</small>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-seconds">00</span>
+            <small class="countdown-label">sec</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unlocked view: reveal -->
+      <div class="landing-view hidden" id="unlockedView">
+        <p class="eyebrow">the wait is over</p>
+        <h1 class="headline" id="unlockedHeadline">Happy Birthday, Beautiful!</h1>
+        <p class="sub-text">another year more radiant and incredible than the last.</p>
+        <p class="small-text">a special surprise just for you</p>
+        <button class="btn btn-primary" id="startSurpriseBtn">Start the surprise</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ MAIN CONTENT (hidden until unlocked) ============ -->
+  <main id="mainContent">
+
+    <!-- ============ SECTION 2: MILESTONE ============ -->
+    <section id="section-milestone" class="section milestone">
+      <p class="label">You turned</p>
+      <h2 class="big-number" id="ageNumber">0</h2>
+      <p class="label">today</p>
+
+      <div class="divider" aria-hidden="true"><span>&#10052;</span></div>
+
+      <p class="label">You've been shining for...</p>
+      <h3 class="days-number" id="daysCounter">0</h3>
+      <p class="label">days</p>
+
+      <div class="keepsake-card">
+        <p>Radiant, stunning, and the most incredible soul I know.</p>
+        <p>Every year you only get more beautiful inside and out. You're absolutely radiant, the world is a better place because you're in it.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3: GROWING UP GORGEOUS ============ -->
+    <section id="section-growing" class="section growing">
+      <h2 class="section-title">Growing Up Gorgeous</h2>
+
+      <div class="polaroid-stack">
+        <figure class="polaroid tilt-a">
+          <img src="./assets/photo-placeholder-1.jpg" alt="Photo placeholder 1 — replace with a childhood photo">
+          <figcaption>little one &#9733;</figcaption>
+        </figure>
+        <figure class="polaroid tilt-b">
+          <img src="./assets/photo-placeholder-2.jpg" alt="Photo placeholder 2 — replace with a childhood photo">
+          <figcaption>growing up &#9733;</figcaption>
+        </figure>
+        <figure class="polaroid tilt-c">
+          <img src="./assets/photo-placeholder-3.jpg" alt="Photo placeholder 3 — replace with a childhood photo">
+          <figcaption>getting braver &#9733;</figcaption>
+        </figure>
+        <figure class="polaroid tilt-d">
+          <img src="./assets/photo-placeholder-4.jpg" alt="Photo placeholder 4 — replace with a teenage photo">
+          <figcaption>finding yourself &#9733;</figcaption>
+        </figure>
+        <figure class="polaroid tilt-e">
+          <img src="./assets/photo-placeholder-5.jpg" alt="Photo placeholder 5 — replace with a recent photo">
+          <figcaption>gorgeous, now &#9733;</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 4: A LETTER FOR YOU ============ -->
+    <section id="section-letter" class="section letter">
+      <h2 class="section-title">A letter for you...</h2>
+      <p class="hint-text" id="envelopeHint">tap the envelope to open it</p>
+
+      <button class="envelope" id="envelope" aria-expanded="false" aria-controls="envelopeLetter">
+        <span class="envelope-seal"></span>
+        <span class="envelope-flap"></span>
+        <span class="envelope-back"></span>
+        <span class="envelope-pocket"></span>
+      </button>
+
+      <div class="letter-overlay" id="letterOverlay">
+        <div class="letter-paper" id="envelopeLetter">
+          <button class="letter-close" id="letterCloseBtn" aria-label="Close letter">&times;</button>
+          <div class="letter-text">
+            <!-- PLACEHOLDER: write your long sweet message here -->
+            <p>[Write your long sweet message here — this is the placeholder for your letter to her. Replace this whole block with whatever you want it to say.]</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="couple-gifs">
+        <img src="./assets/couple-gif-placeholder-1.gif" alt="Couple gif placeholder 1">
+        <img src="./assets/couple-gif-placeholder-2.gif" alt="Couple gif placeholder 2">
+      </div>
+    </section>
+
+    <!-- ============ SECTION 5: 12 REASONS ============ -->
+    <section id="section-reasons" class="section reasons">
+      <div class="reasons-header">
+        <h2 class="section-title">12 reasons why you're incredible</h2>
+        <img src="./assets/gif-placeholder-reasons.gif" alt="Cute gif placeholder" class="header-gif">
+      </div>
+
+      <p class="reasons-progress">Opened <span id="reasonsOpenedCount">0</span> / 12</p>
+
+      <div class="reasons-grid" id="reasonsGrid"></div>
+
+      <div class="reasons-controls">
+        <button class="btn btn-secondary" id="revealNextBtn">Reveal Next</button>
+        <button class="btn btn-secondary" id="revealAllBtn">Reveal All</button>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 6: MESSAGES JUST FOR YOU ============ -->
+    <section id="section-messages" class="section messages">
+      <h2 class="section-title">Messages Just for you</h2>
+      <div class="messages-grid" id="messagesGrid"></div>
+      <button class="btn btn-secondary" id="shuffleBtn">&#128256; Shuffle</button>
+    </section>
+
+    <!-- ============ SECTION 7: FINALE ============ -->
+    <section id="section-finale" class="section finale">
+      <img src="./assets/finale-gif-placeholder.gif" alt="Finale gif placeholder" class="finale-gif">
+      <h2 class="headline">Happiest Birthday, My Love&#9829;</h2>
+      <p class="finale-text">You make every single day of my life feel like a gift. Here's to us and many more birthdays together.</p>
+      <blockquote class="quote-block">You are the best thing that ever happened to me.</blockquote>
+      <button class="btn btn-primary" id="replayBtn">Replay from the top</button>
+    </section>
+
+  </main>
+
+  <div class="confetti-container" id="confettiContainer" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
