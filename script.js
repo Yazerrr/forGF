@@ -9,7 +9,7 @@ const TARGET_MONTH = 6;   // July
 const TARGET_DAY = 30;
 
 // Her exact birth date — replace with the real value, format: 'YYYY-MM-DD'
-const gfBirthDate = 'YYYY-MM-DD';
+const gfBirthDate = '2005-06-30';
 
 // Swap in a different word here if you want ("Gorgeous", "Amazing", etc.)
 const UNLOCKED_SWEET_WORD = 'Beautiful';
