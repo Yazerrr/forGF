@@ -58,6 +58,85 @@ let messagesOrder = MESSAGES.map((_, i) => i);
 let ageCounterPlayed = false;
 
 /* ==========================================================================
+   LOCAL DEBUG / TESTING — only affects YOUR browser tab, nobody else
+   ==========================================================================
+   Type this word anywhere on the page (no input field needed — there isn't
+   one) to open a small prompt where you can jump to a fake date/time and
+   test the locked/unlocked/re-locked states. It's stored in
+   sessionStorage, which is private to your own browser tab and is never
+   sent anywhere, saved to any file, or visible to anyone else who opens
+   the site. Leave the prompt blank to turn it back off.
+   Change DEBUG_TRIGGER to any word only you'd know/type if you want. */
+const DEBUG_TRIGGER = 'debugtime';
+const DEBUG_STORAGE_KEY = '__bday_debug_offset_ms';
+
+let debugKeyBuffer = '';
+document.addEventListener('keydown', (e) => {
+  if (e.key.length !== 1) return; // ignore Shift, Enter, arrows, etc.
+  debugKeyBuffer = (debugKeyBuffer + e.key).slice(-DEBUG_TRIGGER.length).toLowerCase();
+  if (debugKeyBuffer === DEBUG_TRIGGER) {
+    debugKeyBuffer = '';
+    promptForFakeTime();
+  }
+});
+
+function promptForFakeTime() {
+  const existingOffset = Number(sessionStorage.getItem(DEBUG_STORAGE_KEY) || 0);
+  const suggestion = existingOffset
+    ? new Date(Date.now() + existingOffset).toISOString().slice(0, 16)
+    : '';
+  const input = window.prompt(
+    'Local test mode — only this tab is affected.\n' +
+    'Enter a fake date/time to jump to (e.g. 2026-08-05T10:00),\n' +
+    'or leave blank to turn test mode off:',
+    suggestion
+  );
+  if (input === null) return; // cancelled, no change
+  if (input.trim() === '') {
+    sessionStorage.removeItem(DEBUG_STORAGE_KEY);
+  } else {
+    const parsed = new Date(input);
+    if (isNaN(parsed.getTime())) {
+      window.alert('Couldn\u2019t read that date \u2014 try the format YYYY-MM-DDTHH:mm');
+      return;
+    }
+    // Store the OFFSET rather than a frozen instant, so time keeps
+    // flowing naturally from that point instead of standing still.
+    sessionStorage.setItem(DEBUG_STORAGE_KEY, String(parsed.getTime() - Date.now()));
+  }
+  ageCounterPlayed = false;
+  renderLanding();
+  playAgeCounters();
+}
+
+// Every other part of the site should call getNow() instead of new Date()
+// so testing affects the whole site consistently.
+function getNow() {
+  const offset = Number(sessionStorage.getItem(DEBUG_STORAGE_KEY) || 0);
+  return offset ? new Date(Date.now() + offset) : new Date();
+}
+
+function updateDebugBadge() {
+  const offset = Number(sessionStorage.getItem(DEBUG_STORAGE_KEY) || 0);
+  let badge = document.getElementById('debugBadge');
+  if (!offset) {
+    if (badge) badge.style.display = 'none';
+    return;
+  }
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.id = 'debugBadge';
+    badge.style.cssText =
+      'position:fixed;bottom:12px;right:12px;background:#4A3B3C;color:#fff;' +
+      'font:12px/1.4 -apple-system,sans-serif;padding:8px 12px;border-radius:8px;' +
+      'z-index:9999;opacity:0.9;pointer-events:none;';
+    document.body.appendChild(badge);
+  }
+  badge.style.display = 'block';
+  badge.textContent = `TEST MODE \u2014 acting as: ${getNow().toLocaleString()}`;
+}
+
+/* ==========================================================================
    TIME LOCK LOGIC
    ========================================================================== */
 function getTargetDateForYear(year) {
@@ -82,7 +161,7 @@ function computeState(now) {
 
 function getEffectiveState() {
   if (forceUnlocked) return { state: 'unlocked', countdownTarget: null };
-  return computeState(new Date());
+  return computeState(getNow());
 }
 
 /* ==========================================================================
@@ -93,6 +172,7 @@ const unlockedView = document.getElementById('unlockedView');
 const unlockedHeadline = document.getElementById('unlockedHeadline');
 
 function renderLanding() {
+  updateDebugBadge();
   const { state, countdownTarget } = getEffectiveState();
 
   if (state === 'unlocked') {
@@ -108,7 +188,7 @@ function renderLanding() {
 }
 
 function updateCountdown(target) {
-  const now = new Date();
+  const now = getNow();
   let diff = Math.max(0, target - now);
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -148,7 +228,7 @@ startSurpriseBtn.addEventListener('click', revealContent);
 function calculateAge(birthDateStr) {
   const birth = new Date(birthDateStr);
   if (isNaN(birth.getTime())) return null;
-  const now = new Date();
+  const now = getNow();
   let age = now.getFullYear() - birth.getFullYear();
   const hasHadBirthdayThisYear =
     now.getMonth() > birth.getMonth() ||
@@ -160,7 +240,7 @@ function calculateAge(birthDateStr) {
 function calculateDaysSince(birthDateStr) {
   const birth = new Date(birthDateStr);
   if (isNaN(birth.getTime())) return null;
-  const now = new Date();
+  const now = getNow();
   return Math.floor((now - birth) / (1000 * 60 * 60 * 24));
 }
 
